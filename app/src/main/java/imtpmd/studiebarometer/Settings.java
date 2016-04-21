@@ -1,4 +1,5 @@
 package imtpmd.studiebarometer;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,24 +12,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.data.Entry;
+
 import java.util.ArrayList;
 
 /**
- * Created by SuperJoot on 19-4-2016.
+ * Created by SuperJoot on 20-4-2016.
  */
-public class Advies extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
-
+public class Settings extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.advies_main);
-
+        setContentView(R.layout.settings_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -39,23 +38,7 @@ public class Advies extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        PieChart pieChart = (PieChart) findViewById(R.id.chart);
-        ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(4f, 1));
-        entries.add(new Entry(0f, 2));
-        PieDataSet dataset = new PieDataSet(entries, "");
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("Niet behaalde aantal punten");
-        labels.add("Behaalde aantal punten");
-
-        PieData data = new PieData(labels, dataset);
-        pieChart.setDescription("Aantal behaalde punten ");
-        //dataset.setColors(new int[]{color.RED  , R.color.GREEN});
-        pieChart.setData(data);
-        pieChart.animateY(2500);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -83,7 +66,7 @@ public class Advies extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_instellingen) {
-            startActivity(new Intent(Advies.this, Settings.class));
+            startActivity(new Intent(Settings.this, Settings.class));
             return true;
         }
 
@@ -97,16 +80,15 @@ public class Advies extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_hoofdmenu) {
-            startActivity(new Intent(Advies.this, MainActivity.class));
+            startActivity(new Intent(Settings.this, MainActivity.class));
         } else if (id == R.id.nav_vakkenencijfers) {
-            startActivity(new Intent(Advies.this, Vakken.class));
+            startActivity(new Intent(Settings.this, Vakken.class));
 
         } else if (id == R.id.nav_advies) {
-            startActivity(new Intent(Advies.this, Advies.class));
+            startActivity(new Intent(Settings.this, Advies.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
-
