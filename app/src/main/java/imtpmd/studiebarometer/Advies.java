@@ -17,9 +17,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.data.Entry;
 import java.util.ArrayList;
 
-/**
- * Created by SuperJoot on 19-4-2016.
- */
+
 public class Advies extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -35,6 +33,7 @@ public class Advies extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                setTitle("Advies");
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

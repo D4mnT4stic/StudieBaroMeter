@@ -19,22 +19,26 @@
         android:id="@+id/naamInvoer" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Voer in"
+        android:text="Opslaan"
         android:id="@+id/naamInvoerButton"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/gebruikersNaam"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="writeExternalStorage" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:text="Name"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/gebruikersNaam"
         android:layout_below="@+id/naamInvoer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+
+
 </RelativeLayout>

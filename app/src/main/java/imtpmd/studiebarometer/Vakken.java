@@ -16,9 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-/**
- * Created by SuperJoot on 19-4-2016.
- */
+
 public class Vakken extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -32,6 +30,7 @@ public class Vakken extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                setTitle("Vakken en cijfers");
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
