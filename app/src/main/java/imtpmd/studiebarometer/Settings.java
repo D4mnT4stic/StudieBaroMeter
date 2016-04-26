@@ -1,6 +1,9 @@
 package imtpmd.studiebarometer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,19 +37,36 @@ import java.util.ArrayList;
 
 public class Settings extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Button opslaan;
+    EditText ed1;
+    public static final String MYPREFERENCES = "MyPrefs";
+    public static final String Name ="";
 
-
-    private GoogleApiClient client;
-    EditText editText;
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_main);
-        editText = (EditText)findViewById(R.id.gebruikersNaam);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ed1 = (EditText) findViewById(R.id.gebruikersNaam);
+        opslaan = (Button) findViewById(R.id.buttonOpslaanNaam);
+        loadSavedPreference();
+        sharedpreferences = getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+
+        opslaan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String n = ed1.getText().toString();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Name, n);
+                editor.commit();
+                Toast.makeText(Settings.this, "Naam opgeslagen!", Toast.LENGTH_LONG).show();
+            }
+
+        });
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -54,10 +75,13 @@ public class Settings extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
+    }
+
+    public void loadSavedPreference(){
+        SharedPreferences userDetails = this.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+        String tempName = userDetails.getString(Name, "");  // (key, default)
+        ed1.setText(tempName);
 
     }
 
@@ -113,37 +137,5 @@ public class Settings extends AppCompatActivity
         return true;
     }
 
-   /*public void writeExternalStorage(View view) {
-
-        String state;
-        state = Environment.getExternalStorageState();
-
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            File Root = Environment.getExternalStorageDirectory();
-            File Dir = new File(Root.getAbsolutePath() + "/Studiebarometer");
-            if (!Dir.exists()) {
-                Dir.mkdir();
-            }
-            File file = new File(Dir, "Gebruikersnaam.txt");
-
-            String Gebruikersnaam = editText.getText().toString();
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                fileOutputStream.write(Message.getBytes());
-                fileOutputStream.close();
-                editText.setText("");
-                Toast.makeText(getApplicationContext(), "Opgeslagen", Toast.LENGTH_LONG).show();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "SD card Not Found", Toast.LENGTH_LONG).show();
-        }
-
-
-    }*/
 
 }
