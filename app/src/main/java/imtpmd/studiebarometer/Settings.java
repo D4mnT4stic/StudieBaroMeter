@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -29,16 +30,23 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Settings extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Button opslaan;
     EditText ed1;
+    TextView studentNaam;
     public static final String MYPREFERENCES = "MyPrefs";
     public static final String Name ="";
 
@@ -51,20 +59,23 @@ public class Settings extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ed1 = (EditText) findViewById(R.id.gebruikersNaam);
+        studentNaam = (TextView) findViewById(R.id.studentNaam);
         opslaan = (Button) findViewById(R.id.buttonOpslaanNaam);
         loadSavedPreference();
+
+
         sharedpreferences = getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
 
         opslaan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String n = ed1.getText().toString();
+                String studentNaam = ed1.getText().toString();
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Name, n);
+                editor.putString(Name, studentNaam);
                 editor.commit();
                 Toast.makeText(Settings.this, "Naam opgeslagen!", Toast.LENGTH_LONG).show();
-            }
 
+            }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -80,10 +91,10 @@ public class Settings extends AppCompatActivity
 
     public void loadSavedPreference(){
         SharedPreferences userDetails = this.getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
-        String tempName = userDetails.getString(Name, "");  // (key, default)
-        ed1.setText(tempName);
-
+        String studentName = userDetails.getString(Name, "");  // (key, default)
+        ed1.setText(studentName);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -136,6 +147,5 @@ public class Settings extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 }

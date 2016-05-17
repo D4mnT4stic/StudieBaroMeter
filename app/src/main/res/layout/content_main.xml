@@ -21,4 +21,32 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="72dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Actueel aantal punten:"
+        android:id="@+id/textAantalPunten"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="punten"
+        android:id="@+id/aantalPunten"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Laad punten"
+        android:id="@+id/puntenLaad"
+        android:layout_below="@+id/textAantalPunten"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
+
+
 </RelativeLayout>

@@ -1,9 +1,13 @@
 package imtpmd.studiebarometer;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +18,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Button puntenLaad;
+    TextView aantalpunten;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +46,28 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        puntenLaad = (Button) findViewById(R.id.puntenLaad);
+        aantalpunten = (TextView) findViewById(R.id.aantalPunten);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
                 setTitle("Hoofdpagina");
+
+
+        puntenLaad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parsejson();
+
+                //Toast.makeText(MainActivity.this, "punten geladen!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -85,5 +121,43 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public String loadJSONFromAsset()
+    {
+        String json = null;
+        try {
+            InputStream is = getAssets().open("vakken.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
+    private void parsejson() {
+
+
+        if (loadJSONFromAsset() != null) {
+            JSONArray object = null;
+            try {
+                object = new JSONArray(loadJSONFromAsset());
+            } catch (JSONException e) {
+                Toast.makeText(MainActivity.this, "JSON OBJECT EXCEPTION" + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            try {
+                if (object != null) {
+                    
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
